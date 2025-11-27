@@ -1,0 +1,61 @@
+/* src/theme.css */
+
+/* ===== Core dark theme (default) – UrbanCraft monochrome ===== */
+:root {
+    --color-bg: #0a0a0a; /* deep charcoal */
+    --color-text: #b8b8b8; /* soft gray */
+    --color-heading: #ffffff; /* clean white */
+
+    /* Borders */
+    --color-border: #2a2a2a; /* subtle border */
+    --color-border-soft: #1a1a1a; /* very soft separators */
+    --color-border-strong: #3a3a3a; /* stronger frame/border */
+
+    /* Surfaces */
+    --color-card: #131313; /* elevated panel */
+    --color-card-soft: #1b1b1b; /* hover surface / subtle strip */
+
+    /* Accent – UrbanCraft warm sand/gold */
+    --accent: #c9a96a; /* premium sand gold */
+    --accent-soft: rgba(201, 169, 106, 0.12);
+    --accent-border: rgba(201, 169, 106, 0.45);
+
+    /* Links */
+    --link: #d4c098;
+    --link-hover: #f5deb5;
+
+    /* Shadows – dark theme */
+    --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.6);
+    --shadow-md: 0 8px 24px rgba(0, 0, 0, 0.75);
+    --shadow-lg: 0 18px 45px rgba(0, 0, 0, 0.85);
+}
+
+/* ===== Light theme – UrbanCraft monochrome ===== */
+html[data-theme="light"] {
+    --color-bg: #f9f5ef; /* warm sand white */
+    --color-text: #333333; /* dark slate */
+    --color-heading: #111111; /* strong heading */
+
+    /* Borders */
+    --color-border: #d6cfc3; /* soft neutral border */
+    --color-border-soft: #e6ddd1; /* very light separators */
+    --color-border-strong: #c3b8a7; /* for outlines/frames */
+
+    /* Surfaces */
+    --color-card: #ffffff; /* clean panel */
+    --color-card-soft: #f3ece2; /* warm subtle panel */
+
+    /* Accent – slightly darker for contrast */
+    --accent: #b48a52; /* warm tan accent */
+    --accent-soft: rgba(180, 138, 82, 0.15);
+    --accent-border: rgba(180, 138, 82, 0.5);
+
+    /* Links */
+    --link: #8e6a35;
+    --link-hover: #a47d42;
+
+    /* Shadows – light theme (soft & warm) */
+    --shadow-sm: 0 1px 3px rgba(17, 10, 4, 0.12);
+    --shadow-md: 0 10px 30px rgba(17, 10, 4, 0.16);
+    --shadow-lg: 0 24px 60px rgba(17, 10, 4, 0.2);
+}

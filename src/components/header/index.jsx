@@ -1,85 +1,170 @@
-import React, { useEffect, useState } from "react";
-import { Styled } from "./styled";
-import { IoIosMenu } from "react-icons/io";
-import { FiSun, FiMoon } from "react-icons/fi";
+import { useEffect, useRef, useState } from "react";
 import { NavLink } from "react-router-dom";
-import logo from "/images/logo.png";
 
-const THEME_KEY = "urbancraft-ui-theme"; // only for UI theme
+import { FiMenu, FiMoon, FiSun } from "react-icons/fi";
 
-const Header = ({ displayDrawer, setDisplayDrawer, handleHamburgerClick }) => {
+import logo from "../../assets/images/branding/logo.png";
+
+import { Styled } from "./styled";
+
+const THEME_KEY = "urbancraft-ui-theme";
+
+const navigationLinks = [
+    {
+        label: "Home",
+        path: "/",
+    },
+    {
+        label: "About",
+        path: "/about",
+    },
+    {
+        label: "Services",
+        path: "/services",
+    },
+    {
+        label: "Gallery",
+        path: "/gallery",
+    },
+    {
+        label: "Contact",
+        path: "/contact",
+    },
+];
+
+const Header = ({ isMenuOpen = false, onMenuToggle }) => {
+    const previousScrollRef = useRef(0);
+
+    const [isHidden, setIsHidden] = useState(false);
+
     const [isLight, setIsLight] = useState(() => {
-        if (typeof window === "undefined") return false;
-
-        // 1) check localStorage
         try {
-            const stored = window.localStorage.getItem(THEME_KEY);
-            if (stored === "light") return true;
-            if (stored === "dark") return false;
-        } catch (err) {
-            // ignore storage errors
+            return window.localStorage.getItem(THEME_KEY) === "light";
+        } catch {
+            return false;
         }
-
-        // 2) fall back to current html attribute if any
-        const hasLight =
-            document.documentElement.getAttribute("data-theme") === "light";
-        return hasLight;
     });
 
-    // sync theme with <html data-theme="light"> + localStorage
     useEffect(() => {
-        if (typeof document === "undefined") return;
-
         const root = document.documentElement;
+
         if (isLight) {
             root.setAttribute("data-theme", "light");
         } else {
             root.removeAttribute("data-theme");
         }
 
-        // persist choice
         try {
             window.localStorage.setItem(THEME_KEY, isLight ? "light" : "dark");
-        } catch (err) {
-            // ignore storage failures
+        } catch {
+            // Storage can be unavailable in some browser modes.
         }
     }, [isLight]);
 
+    useEffect(() => {
+        const handleScroll = () => {
+            const currentScroll = window.scrollY;
+
+            if (currentScroll <= 20 || isMenuOpen) {
+                setIsHidden(false);
+            } else if (
+                currentScroll > previousScrollRef.current &&
+                currentScroll > 120
+            ) {
+                setIsHidden(true);
+            } else if (currentScroll < previousScrollRef.current) {
+                setIsHidden(false);
+            }
+
+            previousScrollRef.current = Math.max(currentScroll, 0);
+        };
+
+        handleScroll();
+
+        window.addEventListener("scroll", handleScroll, {
+            passive: true,
+        });
+
+        return () => {
+            window.removeEventListener("scroll", handleScroll);
+        };
+    }, [isMenuOpen]);
+
     const handleThemeToggle = () => {
-        setIsLight((prev) => !prev);
+        setIsLight((current) => !current);
     };
 
     return (
-        <Styled.Wrapper>
-            <Styled.Main>
-                <NavLink to="/home" className="brand">
-                    <img src={logo} alt="UrbanCraft logo" className="brandLogo" />
-                    <span className="brandText">UrbanCraft Services</span>
+        <Styled.Wrapper className={isHidden ? "headerHidden" : ""}>
+            <div className="container">
+                <NavLink
+                    to="/"
+                    className="brand"
+                    aria-label="UrbanCraft Services home"
+                >
+                    <img
+                        className="brandLogo"
+                        src={logo}
+                        alt=""
+                        aria-hidden="true"
+                    />
+
+                    <span className="brandContent">
+                        <strong className="brandName">UrbanCraft</strong>
+
+                        <span className="brandText">Services</span>
+                    </span>
                 </NavLink>
 
-                <div className="themeHamburger">
-                    <div className="theme">
-                        <Styled.ThemeToggle
-                            type="button"
-                            aria-label="Toggle light / dark theme"
-                            $isLight={isLight}
-                            onClick={handleThemeToggle}
+                <nav className="navigation" aria-label="Main navigation">
+                    {navigationLinks.map((item) => (
+                        <NavLink
+                            key={item.path}
+                            to={item.path}
+                            end={item.path === "/"}
+                            className={({ isActive }) =>
+                                isActive ? "active" : ""
+                            }
                         >
-                            <span className="icon sun">
-                                <FiSun />
-                            </span>
-                            <span className="icon moon">
-                                <FiMoon />
-                            </span>
-                            <Styled.ThemeThumb $isLight={isLight} />
-                        </Styled.ThemeToggle>
-                    </div>
+                            {item.label}
+                        </NavLink>
+                    ))}
+                </nav>
 
-                    <div className="hamburger" onClick={handleHamburgerClick}>
-                        <IoIosMenu size={24} />
-                    </div>
+                <div className="actions">
+                    <button
+                        className="themeButton"
+                        type="button"
+                        onClick={handleThemeToggle}
+                        aria-label={
+                            isLight ? "Use dark theme" : "Use light theme"
+                        }
+                        title={isLight ? "Dark theme" : "Light theme"}
+                    >
+                        {isLight ? (
+                            <FiMoon aria-hidden="true" />
+                        ) : (
+                            <FiSun aria-hidden="true" />
+                        )}
+                    </button>
+
+                    <button
+                        className="menuButton"
+                        type="button"
+                        onClick={onMenuToggle}
+                        aria-label={
+                            isMenuOpen
+                                ? "Close navigation menu"
+                                : "Open navigation menu"
+                        }
+                        aria-expanded={isMenuOpen}
+                        aria-controls="site-drawer"
+                        title={isMenuOpen ? "Close menu" : "Open menu"}
+                    >
+                        <FiMenu aria-hidden="true" />
+                    </button>
                 </div>
-            </Styled.Main>
+            </div>
         </Styled.Wrapper>
     );
 };

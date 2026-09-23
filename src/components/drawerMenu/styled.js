@@ -1,210 +1,214 @@
 import styled from "styled-components";
 
 export const Styled = {
-    Wrapper: styled.nav`
-        height: 100%;
-        color: var(--color-text);
-        padding: 12px 10px;
+    Wrapper: styled.div`
+        position: fixed;
+        inset: 0;
+        z-index: 1200;
+
         display: flex;
-        flex-direction: column;
-        background: var(--color-surface);
-        border-right: 1px solid var(--color-border-subtle);
-    `,
+        justify-content: flex-end;
 
-    ScrollArea: styled.div`
-        flex: 1 1 auto;
-        overflow: hidden;
-        overflow-y: auto;
-        padding-right: 4px;
+        .backdrop {
+            position: absolute;
+            inset: 0;
 
-        /* simple matching scrollbar */
-        scrollbar-width: thin;
-        scrollbar-color: var(--scrollbar-thumb) transparent;
+            width: 100%;
+            height: 100%;
 
-        &::-webkit-scrollbar {
-            width: 8px;
-        }
-        &::-webkit-scrollbar-track {
-            background: transparent;
-        }
-        &::-webkit-scrollbar-thumb {
-            background: var(--scrollbar-thumb);
-            border-radius: 999px;
-        }
-    `,
+            padding: 0;
 
-    Section: styled.section`
-        border-radius: 12px;
-        padding: 6px 4px 4px;
-        margin-bottom: 10px;
-        background: var(--color-bg-soft);
-        border: 1px solid var(--color-border-subtle);
-    `,
+            background: rgba(0, 0, 0, 0.68);
 
-    SectionHeader: styled.button`
-        width: 100%;
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        padding: 6px 8px;
-        border-radius: 8px;
-        background: transparent;
-        color: inherit;
-        cursor: pointer;
-        border: none;
-        outline: none;
-        transition: background-color 0.16s ease-out, transform 0.09s ease-out;
+            border: 0;
 
-        &:hover {
-            background: var(--color-surface-soft);
-            transform: translateY(-1px);
+            cursor: pointer;
+
+            backdrop-filter: blur(4px);
         }
 
-        .left {
-            display: inline-flex;
+        .panel {
+            position: relative;
+            z-index: 1;
+
+            display: flex;
+            flex-direction: column;
+
+            width: min(390px, 88vw);
+            height: 100%;
+
+            padding: 24px;
+
+            overflow-y: auto;
+
+            color: var(--color-text);
+            background: var(--color-bg);
+
+            border-left: 1px solid var(--color-border);
+
+            box-shadow: var(--shadow-lg);
+        }
+
+        .header {
+            display: flex;
             align-items: center;
-            gap: 8px;
-            font-size: 0.75rem;
+            justify-content: space-between;
+            gap: 20px;
+
+            padding-bottom: 22px;
+
+            border-bottom: 1px solid var(--color-border);
+        }
+
+        .label {
+            display: block;
+
+            margin-bottom: 5px;
+
+            color: var(--accent);
+
+            font-size: 0.58rem;
+            font-weight: 800;
+            letter-spacing: 0.12em;
             text-transform: uppercase;
-            letter-spacing: 0.11em;
-            color: var(--color-text-muted);
+        }
+
+        .title {
+            display: block;
+
+            color: var(--color-heading);
+
+            font-size: 1.2rem;
+            font-weight: 800;
+        }
+
+        .closeButton {
+            display: grid;
+            place-items: center;
+
+            width: 42px;
+            height: 42px;
+
+            padding: 0;
+
+            color: var(--color-text);
+            background: var(--color-card);
+
+            border: 1px solid var(--color-border);
+            border-radius: 9px;
+
+            cursor: pointer;
+
+            transition:
+                border-color 180ms ease,
+                box-shadow 180ms ease;
+        }
+
+        .closeButton svg {
+            width: 18px;
+            height: 18px;
+        }
+
+        .closeButton:hover {
+            border-color: var(--accent-border);
+
+            box-shadow: var(--shadow-sm);
+        }
+
+        .closeButton:focus-visible {
+            outline: 2px solid var(--accent);
+            outline-offset: 3px;
+        }
+
+        .navigation {
+            display: grid;
+            gap: 7px;
+
+            margin-top: 24px;
+        }
+
+        .navigation a {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+
+            min-height: 52px;
+
+            padding: 10px 12px;
+
+            color: var(--color-text);
+
+            border: 1px solid var(--color-border);
+            border-radius: 10px;
+
+            text-decoration: none;
+
+            transition:
+                border-color 180ms ease,
+                box-shadow 180ms ease,
+                text-shadow 180ms ease;
+        }
+
+        .navigation a:hover {
+            border-color: var(--color-border-strong);
+
+            box-shadow: var(--shadow-sm);
+        }
+
+        .navigation a.active {
+            color: var(--color-heading);
+
+            border-color: var(--accent-border);
+
+            text-shadow: 0 0 10px var(--accent-soft);
+        }
+
+        .navigation a:focus-visible {
+            outline: 2px solid var(--accent);
+            outline-offset: 2px;
         }
 
         .icon {
-            font-size: 1rem;
-            color: var(--color-accent);
+            display: grid;
+            place-items: center;
+
+            width: 34px;
+            height: 34px;
+
+            flex-shrink: 0;
+
+            color: var(--accent);
+
+            background: var(--accent-soft);
+
+            border: 1px solid var(--accent-border);
+            border-radius: 8px;
         }
 
-        .chevron {
-            font-size: 1rem;
-            opacity: 0.75;
-            color: var(--color-text-muted);
-        }
-    `,
-
-    SectionBody: styled.div`
-        margin-top: 6px;
-        padding: 4px;
-        border-radius: 9px;
-        background: var(--color-surface);
-        border: 1px solid var(--color-border-subtle);
-    `,
-
-    ItemButton: styled.button`
-        width: 100%;
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        gap: 6px;
-        padding: 6px 10px 6px 14px;
-        border-radius: 8px;
-        background: transparent;
-        border: none;
-        cursor: pointer;
-        color: ${({ $active }) =>
-            $active ? "var(--color-heading)" : "var(--color-text)"};
-        font-size: 0.82rem;
-        transition: background-color 0.16s ease-out, transform 0.09s ease-out,
-            box-shadow 0.16s ease-out;
-
-        &:hover {
-            background: var(--color-surface-soft);
-            transform: translateY(-1px);
-            box-shadow: 0 6px 14px rgba(0, 0, 0, 0.35);
+        .icon svg {
+            width: 15px;
+            height: 15px;
         }
 
-        .left {
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            min-width: 0;
+        .text {
+            font-size: 0.75rem;
+            font-weight: 700;
         }
 
-        .label {
-            white-space: nowrap;
-            text-overflow: ellipsis;
-            overflow: hidden;
+        .bottom {
+            margin-top: auto;
+            padding-top: 26px;
         }
 
-        .icon-main {
-            font-size: 1rem;
-            opacity: ${({ $active }) => ($active ? 1 : 0.85)};
-            color: ${({ $active }) =>
-                $active ? "var(--color-accent)" : "var(--color-text-muted)"};
+        .bottom p {
+            margin: 0;
+
+            color: var(--color-text);
+
+            font-size: 0.7rem;
+            line-height: 1.75;
+
+            opacity: 0.65;
         }
-
-        .chevron {
-            font-size: 0.9rem;
-            opacity: 0.85;
-            color: var(--color-text-muted);
-        }
-    `,
-
-    ItemLink: styled.span`
-        display: inline-flex;
-        align-items: center;
-        justify-content: space-between;
-        gap: 6px;
-        width: 100%;
-        padding: 6px 10px 6px 14px;
-        border-radius: 8px;
-        text-decoration: none;
-        font-size: 0.82rem;
-        cursor: pointer;
-        color: ${({ $active }) =>
-            $active ? "var(--color-heading)" : "var(--color-text)"};
-        background: ${({ $active }) =>
-            $active ? "var(--color-accent-soft)" : "transparent"};
-        border: 1px solid
-            ${({ $active }) =>
-                $active ? "var(--color-border-strong)" : "transparent"};
-        position: relative;
-        transition: background-color 0.16s ease-out, border-color 0.16s ease-out,
-            transform 0.09s ease-out, box-shadow 0.16s ease-out;
-
-        &:hover {
-            background: var(--color-surface-soft);
-            box-shadow: 0 5px 12px rgba(0, 0, 0, 0.4);
-            transform: translateY(-1px);
-        }
-
-        &::before {
-            content: "";
-            position: absolute;
-            left: 6px;
-            top: 6px;
-            bottom: 6px;
-            width: 2px;
-            border-radius: 999px;
-            background: ${({ $active }) =>
-                $active ? "var(--color-accent)" : "transparent"};
-        }
-
-        .left {
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            min-width: 0;
-        }
-
-        .label {
-            white-space: nowrap;
-            text-overflow: ellipsis;
-            overflow: hidden;
-        }
-
-        .icon-main {
-            font-size: 0.9rem;
-            opacity: ${({ $active }) => ($active ? 1 : 0.78)};
-            color: ${({ $active }) =>
-                $active ? "var(--color-accent)" : "var(--color-text-muted)"};
-        }
-    `,
-
-    Children: styled.div`
-        margin-left: 18px;
-        border-left: 1px dashed var(--color-border-subtle);
-        padding-left: 8px;
-        margin-top: 4px;
     `,
 };

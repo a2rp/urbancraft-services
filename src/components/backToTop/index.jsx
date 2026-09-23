@@ -1,39 +1,47 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
+
+import { FiArrowUp } from "react-icons/fi";
+
 import { Styled } from "./styled";
 
-export default function BackToTop({ targetRef, threshold = 240 }) {
-    const [show, setShow] = useState(false);
+const BackToTop = () => {
+    const [isVisible, setIsVisible] = useState(false);
 
     useEffect(() => {
-        const el = targetRef?.current;
-        if (!el) return;
-
-        const onScroll = () => {
-            setShow(el.scrollTop > threshold);
+        const handleScroll = () => {
+            setIsVisible(window.scrollY > 500);
         };
-        // initial check
-        onScroll();
 
-        el.addEventListener("scroll", onScroll, { passive: true });
-        return () => el.removeEventListener("scroll", onScroll);
-    }, [targetRef, threshold]);
+        handleScroll();
+
+        window.addEventListener("scroll", handleScroll, {
+            passive: true,
+        });
+
+        return () => {
+            window.removeEventListener("scroll", handleScroll);
+        };
+    }, []);
 
     const handleClick = () => {
-        const el = targetRef?.current;
-        if (el?.scrollTo) el.scrollTo({ top: 0, behavior: "smooth" });
+        window.scrollTo({
+            top: 0,
+            left: 0,
+            behavior: "smooth",
+        });
     };
 
     return (
-        <Styled.Fab
+        <Styled.Wrapper
+            className={isVisible ? "visible" : ""}
             type="button"
-            $show={show}
             onClick={handleClick}
             aria-label="Back to top"
             title="Back to top"
         >
-            <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true">
-                <path d="M12 5l6 6-1.4 1.4L13 9.8V19h-2V9.8l-3.6 2.6L6 11l6-6z" fill="currentColor" />
-            </svg>
-        </Styled.Fab>
+            <FiArrowUp aria-hidden="true" />
+        </Styled.Wrapper>
     );
-}
+};
+
+export default BackToTop;

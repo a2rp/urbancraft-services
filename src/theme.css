@@ -1,61 +1,70 @@
-/* src/theme.css */
-
-/* ===== Core dark theme (default) – UrbanCraft monochrome ===== */
 :root {
-    --color-bg: #0a0a0a; /* deep charcoal */
-    --color-text: #b8b8b8; /* soft gray */
-    --color-heading: #ffffff; /* clean white */
+    color-scheme: dark;
 
-    /* Borders */
-    --color-border: #2a2a2a; /* subtle border */
-    --color-border-soft: #1a1a1a; /* very soft separators */
-    --color-border-strong: #3a3a3a; /* stronger frame/border */
+    --color-bg: #0a0907;
+    --color-card: #12100d;
+    --color-card-soft: #17140f;
 
-    /* Surfaces */
-    --color-card: #131313; /* elevated panel */
-    --color-card-soft: #1b1b1b; /* hover surface / subtle strip */
+    --color-heading: #f4eee5;
+    --color-text: #aaa196;
+    --color-text-muted: #7e766c;
 
-    /* Accent – UrbanCraft warm sand/gold */
-    --accent: #c9a96a; /* premium sand gold */
-    --accent-soft: rgba(201, 169, 106, 0.12);
-    --accent-border: rgba(201, 169, 106, 0.45);
+    --color-border: #29251f;
+    --color-border-soft: #211e19;
+    --color-border-strong: #50483d;
 
-    /* Links */
-    --link: #d4c098;
-    --link-hover: #f5deb5;
+    --accent: #c99a59;
+    --accent-soft: rgba(201, 154, 89, 0.11);
+    --accent-border: #5d472d;
 
-    /* Shadows – dark theme */
-    --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.6);
-    --shadow-md: 0 8px 24px rgba(0, 0, 0, 0.75);
-    --shadow-lg: 0 18px 45px rgba(0, 0, 0, 0.85);
+    --shadow-sm: 0 6px 18px rgba(0, 0, 0, 0.18);
+
+    --shadow-md: 0 14px 34px rgba(0, 0, 0, 0.24);
+
+    --shadow-lg: 0 22px 60px rgba(0, 0, 0, 0.34);
+
+    --radius-sm: 8px;
+    --radius-md: 12px;
+    --radius-lg: 18px;
+
+    --transition-fast: 150ms ease;
+    --transition-med: 220ms ease;
+
+    --focus-ring: #d6a968;
+
+    --scrollbar-track: #0a0907;
+    --scrollbar-thumb: #393229;
+    --scrollbar-thumb-hover: #514638;
 }
 
-/* ===== Light theme – UrbanCraft monochrome ===== */
-html[data-theme="light"] {
-    --color-bg: #f9f5ef; /* warm sand white */
-    --color-text: #333333; /* dark slate */
-    --color-heading: #111111; /* strong heading */
+:root[data-theme="light"] {
+    color-scheme: light;
 
-    /* Borders */
-    --color-border: #d6cfc3; /* soft neutral border */
-    --color-border-soft: #e6ddd1; /* very light separators */
-    --color-border-strong: #c3b8a7; /* for outlines/frames */
+    --color-bg: #f4f1eb;
+    --color-card: #ebe6dd;
+    --color-card-soft: #e3ddd3;
 
-    /* Surfaces */
-    --color-card: #ffffff; /* clean panel */
-    --color-card-soft: #f3ece2; /* warm subtle panel */
+    --color-heading: #1c1915;
+    --color-text: #5f584f;
+    --color-text-muted: #7e756a;
 
-    /* Accent – slightly darker for contrast */
-    --accent: #b48a52; /* warm tan accent */
-    --accent-soft: rgba(180, 138, 82, 0.15);
-    --accent-border: rgba(180, 138, 82, 0.5);
+    --color-border: #d6cfc4;
+    --color-border-soft: #e1dad0;
+    --color-border-strong: #ada295;
 
-    /* Links */
-    --link: #8e6a35;
-    --link-hover: #a47d42;
+    --accent: #94672d;
+    --accent-soft: rgba(148, 103, 45, 0.1);
+    --accent-border: #b89569;
 
-    /* Shadows – light theme (soft & warm) */
-    --shadow-sm: 0 1px 3px rgba(17, 10, 4, 0.12);
-    --shadow-md: 0 10px 30px rgba(17, 10, 4, 0.16);
-    --shadow-lg: 0 24px 60px rgba(17, 10, 4, 0.2);
+    --shadow-sm: 0 6px 18px rgba(52, 43, 32, 0.07);
+
+    --shadow-md: 0 14px 34px rgba(52, 43, 32, 0.1);
+
+    --shadow-lg: 0 22px 60px rgba(52, 43, 32, 0.14);
+
+    --focus-ring: #8a5f2b;
+
+    --scrollbar-track: #ebe6dd;
+    --scrollbar-thumb: #c1b7aa;
+    --scrollbar-thumb-hover: #9f9282;
 }

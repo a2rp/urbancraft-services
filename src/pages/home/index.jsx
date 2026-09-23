@@ -1,327 +1,283 @@
-// src/pages/home/index.jsx
-import React, { useState } from "react";
 import { NavLink } from "react-router-dom";
-import { Styled } from "./styled";
+
 import {
-    FiShoppingBag,
-    FiTruck,
-    FiPhoneCall,
-    FiMapPin,
-    FiClock,
-    FiCamera,
-    FiInfo,
     FiArrowRight,
-    FiStar,
     FiCheckCircle,
-    FiImage,
+    FiClock,
+    FiMapPin,
+    FiShoppingBag,
+    FiStar,
+    FiTruck,
 } from "react-icons/fi";
 
-const HERO_URL =
-    "https://images.unsplash.com/photo-1542838132-92c53300491e?auto=format&fit=crop&w=1400&q=80";
+import ImageWithLoader from "../../components/imageWithLoader";
 
-const FALLBACK_URL =
-    "https://images.unsplash.com/photo-1514933651103-005eec06c04b?auto=format&fit=crop&w=1200&q=80";
+import heroImage from "../../assets/images/home/hero.webp";
+import service01 from "../../assets/images/home/service-01.webp";
+import service02 from "../../assets/images/home/service-02.webp";
+import service03 from "../../assets/images/home/service-03.webp";
+import gallery01 from "../../assets/images/home/gallery-01.webp";
+import gallery02 from "../../assets/images/home/gallery-02.webp";
+import gallery03 from "../../assets/images/home/gallery-03.webp";
 
-const QUICK_LINKS = [
-    {
-        id: "about",
-        to: "/about",
-        label: "About the store",
-        description:
-            "How UrbanCraft Services started, how we think about time, layout, and calm shopping.",
-        tag: "Story",
-        icon: FiInfo,
-    },
-    {
-        id: "services",
-        to: "/services",
-        label: "Services & deliveries",
-        description:
-            "Home delivery, quick pickups, subscriptions and bulk orders—for everyday use.",
-        tag: "Most visited",
-        icon: FiTruck,
-    },
-    {
-        id: "gallery",
-        to: "/gallery",
-        label: "Gallery & space",
-        description:
-            "A visual sense of the store, racks, fresh sections, and how the layout feels.",
-        tag: "Preview",
-        icon: FiCamera,
-    },
-    {
-        id: "contact",
-        to: "/contact",
-        label: "Contact & timings",
-        description:
-            "Store location, rough timings, and the best way to reach us for orders.",
-        tag: "Details",
-        icon: FiPhoneCall,
-    },
-];
+import { Styled } from "./styled";
 
-const HIGHLIGHTS = [
+const highlights = [
     {
         label: "Home deliveries / month",
         value: "150+",
-        icon: FiTruck,
+        icon: <FiTruck aria-hidden="true" />,
     },
     {
         label: "Repeat customers",
         value: "70%+",
-        icon: FiStar,
+        icon: <FiStar aria-hidden="true" />,
     },
     {
-        label: "Typical delivery window",
-        value: "60–90 mins",
-        icon: FiClock,
+        label: "Typical delivery slot",
+        value: "60-90 mins",
+        icon: <FiClock aria-hidden="true" />,
     },
     {
-        label: "Focus area",
-        value: "Single city",
-        icon: FiMapPin,
+        label: "Local focus",
+        value: "Bengaluru",
+        icon: <FiMapPin aria-hidden="true" />,
     },
 ];
 
-const TODAY_POINTS = [
-    "Same-day delivery for orders confirmed before the daily cut-off.",
-    "Priority help for elderly customers and families with young kids.",
-    "Quick pickup option for regular lists—call ahead, collect in minutes.",
+const services = [
+    {
+        title: "Home Delivery",
+        text: "Simple same-day delivery for daily essentials and repeat household orders.",
+        image: service01,
+        imageAlt: "UrbanCraft groceries prepared for local home delivery",
+        icon: <FiTruck aria-hidden="true" />,
+    },
+    {
+        title: "Quick Pickup",
+        text: "Share your list ahead of time and collect a prepared order without waiting.",
+        image: service02,
+        imageAlt: "Prepared grocery order ready for quick pickup",
+        icon: <FiShoppingBag aria-hidden="true" />,
+    },
+    {
+        title: "Repeat Orders",
+        text: "Keep frequently used items easier to manage with flexible recurring orders.",
+        image: service03,
+        imageAlt: "Everyday household essentials arranged for repeat orders",
+        icon: <FiCheckCircle aria-hidden="true" />,
+    },
 ];
 
-function handleImageError(e) {
-    const img = e.target;
-    if (!img.dataset.fallbackApplied) {
-        img.dataset.fallbackApplied = "1";
-        img.src = FALLBACK_URL;
-    }
-}
+const gallery = [
+    {
+        src: gallery01,
+        alt: "Fresh produce displayed inside UrbanCraft Services",
+    },
+    {
+        src: gallery02,
+        alt: "Organised grocery shelves inside UrbanCraft Services",
+    },
+    {
+        src: gallery03,
+        alt: "UrbanCraft store details and everyday essentials",
+    },
+];
 
-export default function Home() {
-    const [heroOk, setHeroOk] = useState(true);
-
+const Home = () => {
     return (
         <Styled.Wrapper>
-            <Styled.Inner className="app-max-width">
-                {/* ===== HERO ===== */}
-                <Styled.Hero>
-                    <Styled.HeroText>
-                        <Styled.Pill>
+            <section className="hero">
+                <div className="container heroGrid">
+                    <div className="heroContent">
+                        <div className="label">
                             <span className="dot" />
-                            <span>UrbanCraft Services</span>
-                        </Styled.Pill>
+                            UrbanCraft Services
+                        </div>
 
-                        <Styled.Title>
-                            Daily essentials, minus noisy chaos
-                        </Styled.Title>
+                        <h1>
+                            Daily essentials,
+                            <span>without the chaos.</span>
+                        </h1>
 
-                        <Styled.Subtitle>
-                            A local store tuned slowly around busy lives: calm
-                            layout, predictable service, and simple options for
-                            delivery, pickups, and repeat orders.
-                        </Styled.Subtitle>
-
-                        <Styled.HeroActions>
-                            <NavLink to="/services" className="primary">
-                                <FiTruck className="icon" />
-                                <span>View services</span>
-                            </NavLink>
-                            <NavLink to="/contact" className="ghost">
-                                <span>Contact & timings</span>
-                                <FiArrowRight className="icon" />
-                            </NavLink>
-                        </Styled.HeroActions>
-
-                        <Styled.HeroHighlights>
-                            {HIGHLIGHTS.map((item) => {
-                                const Icon = item.icon;
-                                return (
-                                    <li key={item.label}>
-                                        <div className="label">
-                                            <Icon className="icon" />
-                                            <span>{item.label}</span>
-                                        </div>
-                                        <div className="value">{item.value}</div>
-                                    </li>
-                                );
-                            })}
-                        </Styled.HeroHighlights>
-                    </Styled.HeroText>
-
-                    <Styled.HeroVisual>
-                        {heroOk ? (
-                            <Styled.ImageWrapper>
-                                <img
-                                    src={HERO_URL}
-                                    alt="View from inside a calm, organised grocery aisle"
-                                    loading="lazy"
-                                    onError={(e) => {
-                                        setHeroOk(false);
-                                        handleImageError(e);
-                                    }}
-                                />
-                                <div className="overlay">
-                                    <div className="top-chip">
-                                        <FiShoppingBag className="icon" />
-                                        <span>
-                                            Essentials, snacks, fresh, and more
-                                        </span>
-                                    </div>
-                                    <div className="bottom-strip">
-                                        <p>
-                                            Shelves arranged for clarity, not
-                                            clutter. The goal is simple: you
-                                            should be able to find things
-                                            without feeling rushed.
-                                        </p>
-                                    </div>
-                                </div>
-                            </Styled.ImageWrapper>
-                        ) : (
-                            <Styled.FallbackBlock>
-                                <div className="icon-wrap">
-                                    <FiImage className="icon" />
-                                </div>
-                                <p className="title">
-                                    Hero image preview not loaded
-                                </p>
-                                <p className="desc">
-                                    Some networks block heavy images. The store
-                                    itself is lighter: cleaner aisles, calmer
-                                    service, and fewer things competing for your
-                                    attention.
-                                </p>
-                            </Styled.FallbackBlock>
-                        )}
-                    </Styled.HeroVisual>
-                </Styled.Hero>
-
-                {/* ===== TODAY SECTION ===== */}
-                <Styled.SectionHeader>
-                    <div className="left">
-                        <span className="eyebrow">Today at the store</span>
-                        <h2>How we typically run the day</h2>
-                        <p>
-                            Exact timings and patterns shift with seasons, but
-                            most days follow a simple rhythm: prepare early,
-                            handle peak hours calmly, and stay predictable for
-                            regulars.
+                        <p className="heroText">
+                            A neighbourhood-focused service built around
+                            predictable delivery, quick pickup, organised
+                            shopping, and everyday convenience.
                         </p>
-                    </div>
-                </Styled.SectionHeader>
 
-                <Styled.TodayGrid>
-                    <Styled.TodayCard>
-                        <div className="label-row">
-                            <FiClock className="icon" />
-                            <span>Rough flow of the day</span>
-                        </div>
-                        <ul className="timeline">
-                            <li>
-                                <span className="time">Morning</span>
-                                <p>Stock checks, fresh-arrivals, first lists.</p>
-                            </li>
-                            <li>
-                                <span className="time">Afternoon</span>
-                                <p>
-                                    Calmer hours—great time for slower browse
-                                    visits.
-                                </p>
-                            </li>
-                            <li>
-                                <span className="time">Evening</span>
-                                <p>
-                                    Peak orders & walk-ins; we keep extra focus
-                                    on queue flow and deliveries.
-                                </p>
-                            </li>
-                        </ul>
-                    </Styled.TodayCard>
+                        <div className="heroActions">
+                            <NavLink className="primaryButton" to="/services">
+                                <FiTruck aria-hidden="true" />
+                                View Services
+                            </NavLink>
 
-                    <Styled.TodayCard>
-                        <div className="label-row">
-                            <FiCheckCircle className="icon" />
-                            <span>What doesn’t change</span>
+                            <NavLink className="secondaryButton" to="/contact">
+                                Contact Us
+                                <FiArrowRight aria-hidden="true" />
+                            </NavLink>
                         </div>
-                        <ul className="points">
-                            {TODAY_POINTS.map((p) => (
-                                <li key={p}>
-                                    <span className="bullet" />
-                                    <span>{p}</span>
-                                </li>
+
+                        <div className="highlights">
+                            {highlights.map((item) => (
+                                <article className="highlight" key={item.label}>
+                                    <span className="highlightIcon">
+                                        {item.icon}
+                                    </span>
+
+                                    <div>
+                                        <strong>{item.value}</strong>
+                                        <span>{item.label}</span>
+                                    </div>
+                                </article>
                             ))}
-                        </ul>
-                        <p className="note">
-                            Details vary, but the central promise stays—less
-                            chaos, clearer communication, and quick fixes when
-                            something goes wrong.
-                        </p>
-                    </Styled.TodayCard>
-                </Styled.TodayGrid>
-
-                {/* ===== QUICK LINKS ===== */}
-                <Styled.SectionHeader>
-                    <div className="left">
-                        <span className="eyebrow">Explore the site</span>
-                        <h2>Where do you want to start?</h2>
-                        <p>
-                            Think of this site as a quiet brochure for the
-                            store. Each section focuses on one part: story,
-                            services, visuals, and contact details.
-                        </p>
+                        </div>
                     </div>
-                </Styled.SectionHeader>
 
-                <Styled.QuickGrid>
-                    {QUICK_LINKS.map((item) => {
-                        const Icon = item.icon;
-                        return (
-                            <NavLink key={item.id} to={item.to}>
-                                <Styled.QuickCard>
-                                    <div className="top-row">
-                                        <div className="tag">
-                                            <span className="dot" />
-                                            <span>{item.tag}</span>
-                                        </div>
-                                        <Icon className="icon-main" />
-                                    </div>
-                                    <h3>{item.label}</h3>
-                                    <p>{item.description}</p>
-                                    <div className="cta-row">
-                                        <span>Open section</span>
-                                        <FiArrowRight className="icon-cta" />
-                                    </div>
-                                </Styled.QuickCard>
-                            </NavLink>
-                        );
-                    })}
-                </Styled.QuickGrid>
+                    <div className="heroVisual">
+                        <ImageWithLoader
+                            className="heroImage"
+                            src={heroImage}
+                            alt="Calm and organised UrbanCraft neighbourhood store"
+                            loading="eager"
+                            fetchPriority="high"
+                        />
 
-                {/* ===== SMALL STRIP ===== */}
-                <Styled.BottomStrip>
-                    <div className="left">
-                        <span className="eyebrow">First-time visitor</span>
-                        <h2>Not sure yet? Start small.</h2>
-                        <p>
-                            You don’t have to change your routine overnight.
-                            Begin with one quick pickup, a small delivery, or a
-                            simple walk-in visit just to see how the space
-                            feels.
-                        </p>
+                        <div className="heroCard">
+                            <FiShoppingBag aria-hidden="true" />
+
+                            <div>
+                                <strong>
+                                    Everyday essentials, thoughtfully organised.
+                                </strong>
+
+                                <span>Simple shopping with less friction.</span>
+                            </div>
+                        </div>
                     </div>
-                    <div className="right">
-                        <NavLink to="/services" className="pill-link">
-                            <FiTruck className="icon" />
-                            <span>See what we handle today</span>
-                        </NavLink>
-                        <NavLink to="/gallery" className="pill-link subtle">
-                            <FiCamera className="icon" />
-                            <span>Glance through the gallery</span>
+                </div>
+            </section>
+
+            <section className="section">
+                <div className="container">
+                    <div className="sectionHeader">
+                        <div>
+                            <p className="sectionLabel">Everyday Services</p>
+
+                            <h2>Built around how people actually shop.</h2>
+                        </div>
+
+                        <NavLink className="textLink" to="/services">
+                            Explore all services
+                            <FiArrowRight aria-hidden="true" />
                         </NavLink>
                     </div>
-                </Styled.BottomStrip>
-            </Styled.Inner>
+
+                    <div className="serviceGrid">
+                        {services.map((service) => (
+                            <article
+                                className="serviceCard"
+                                key={service.title}
+                            >
+                                <ImageWithLoader
+                                    className="serviceImage"
+                                    src={service.image}
+                                    alt={service.imageAlt}
+                                />
+
+                                <div className="serviceContent">
+                                    <span className="serviceIcon">
+                                        {service.icon}
+                                    </span>
+
+                                    <h3>{service.title}</h3>
+
+                                    <p>{service.text}</p>
+                                </div>
+                            </article>
+                        ))}
+                    </div>
+                </div>
+            </section>
+
+            <section className="experienceSection">
+                <div className="container experienceGrid">
+                    <div>
+                        <p className="sectionLabel">The UrbanCraft Approach</p>
+
+                        <h2>
+                            Local service should feel simple and dependable.
+                        </h2>
+                    </div>
+
+                    <div className="experienceContent">
+                        <p>
+                            UrbanCraft focuses on a clear store layout,
+                            practical communication, careful packing, and
+                            predictable local service.
+                        </p>
+
+                        <p>
+                            Instead of adding unnecessary complexity, the
+                            experience is designed around the things customers
+                            use most often.
+                        </p>
+
+                        <NavLink className="textLink" to="/about">
+                            Read our story
+                            <FiArrowRight aria-hidden="true" />
+                        </NavLink>
+                    </div>
+                </div>
+            </section>
+
+            <section className="section">
+                <div className="container">
+                    <div className="sectionHeader">
+                        <div>
+                            <p className="sectionLabel">Store Preview</p>
+
+                            <h2>A closer look at the space.</h2>
+                        </div>
+
+                        <NavLink className="textLink" to="/gallery">
+                            View gallery
+                            <FiArrowRight aria-hidden="true" />
+                        </NavLink>
+                    </div>
+
+                    <div className="galleryGrid">
+                        {gallery.map((item) => (
+                            <ImageWithLoader
+                                key={item.src}
+                                className="galleryImage"
+                                src={item.src}
+                                alt={item.alt}
+                            />
+                        ))}
+                    </div>
+                </div>
+            </section>
+
+            <section className="ctaSection">
+                <div className="container cta">
+                    <div>
+                        <p className="sectionLabel">Need Something Today?</p>
+
+                        <h2>
+                            Tell us what you need and we will help you plan the
+                            quickest option.
+                        </h2>
+                    </div>
+
+                    <NavLink className="primaryButton" to="/contact">
+                        Contact UrbanCraft
+                        <FiArrowRight aria-hidden="true" />
+                    </NavLink>
+                </div>
+            </section>
         </Styled.Wrapper>
     );
-}
+};
+
+export default Home;

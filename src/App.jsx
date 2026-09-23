@@ -1,59 +1,43 @@
-// src/App.jsx
-import React, { useEffect, useRef, useState } from "react";
-import { useLocation } from "react-router-dom";
-import { Styled } from "./App.styled";
-import Header from "./components/header";
-import Footer from "./components/footer";
-import AppRoutes from "./AppRoutes";
+import { useCallback, useState } from "react";
+
 import BackToTop from "./components/backToTop";
 import DrawerMenu from "./components/drawerMenu";
+import Footer from "./components/footer";
+import Header from "./components/header";
+import ScrollToTop from "./components/scrollToTop";
 
-export default function App() {
-    const wrapperRef = useRef(null);
-    const location = useLocation();
-    const [displayDrawer, setDisplayDrawer] = useState(false);
+import AppRoutes from "./routes/AppRoutes";
 
-    const handleHamburgerClick = () => {
-        setDisplayDrawer(prev => !prev);
-    };
+import { Styled } from "./App.styled";
 
-    useEffect(() => {
-        // console.log("displayDrawer", displayDrawer);
-    }, [displayDrawer]);
+const App = () => {
+    const [isMenuOpen, setIsMenuOpen] = useState(false);
 
-    useEffect(() => {
-        wrapperRef.current?.scrollTo({ top: 0, behavior: "smooth" });
-    }, [location.pathname]);
+    const handleMenuToggle = useCallback(() => {
+        setIsMenuOpen((current) => !current);
+    }, []);
+
+    const handleMenuClose = useCallback(() => {
+        setIsMenuOpen(false);
+    }, []);
 
     return (
-        <>
-            <Styled.Wrapper ref={wrapperRef}>
-                <Header
-                    displayDrawer={displayDrawer}
-                    setDisplayDrawer={setDisplayDrawer}
-                    handleHamburgerClick={handleHamburgerClick}
-                />
-                <Styled.Main>
-                    <Styled.RoutesWrapper>
-                        <AppRoutes />
-                    </Styled.RoutesWrapper>
-                </Styled.Main>
-                <Footer />
-                <BackToTop targetRef={wrapperRef} />
-            </Styled.Wrapper>
+        <Styled.Wrapper>
+            <ScrollToTop />
 
-            {displayDrawer && (
-                <>
-                    <Styled.Drawer>
-                        <div className="empty" onClick={handleHamburgerClick}></div>
-                        <div className="menuWrapper">
-                            <div className="menuScroller">
-                                <DrawerMenu onNavigate={handleHamburgerClick} />
-                            </div>
-                        </div>
-                    </Styled.Drawer>
-                </>
-            )}
-        </>
+            <Header isMenuOpen={isMenuOpen} onMenuToggle={handleMenuToggle} />
+
+            <DrawerMenu isOpen={isMenuOpen} onClose={handleMenuClose} />
+
+            <Styled.Main>
+                <AppRoutes />
+            </Styled.Main>
+
+            <Footer />
+
+            <BackToTop />
+        </Styled.Wrapper>
     );
-}
+};
+
+export default App;

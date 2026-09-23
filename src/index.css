@@ -1,47 +1,56 @@
-/* src/index.css */
-@import "./theme.css";
-
-/* ===== Reset ===== */
-
 *,
 *::before,
 *::after {
+    margin: 0;
+    padding: 0;
+
     box-sizing: border-box;
 }
 
-html,
-body,
-#root {
-    margin: 0;
-    padding: 0;
-    min-height: 100%;
-}
+html {
+    min-width: 320px;
 
-/* ===== Base body / typography ===== */
+    font-size: 16px;
+
+    scroll-behavior: smooth;
+    scroll-padding-top: 90px;
+
+    background: var(--color-bg);
+}
 
 body {
-    font-family: Verdana, Geneva, Tahoma, sans-serif;
-    font-size: 13px;
-    line-height: 1.6;
-    -webkit-font-smoothing: antialiased;
-    text-rendering: optimizeLegibility;
-    background-color: var(--color-bg);
+    width: 100%;
+    min-width: 320px;
+    min-height: 100vh;
+
+    margin: 0;
+
     color: var(--color-text);
+    background: var(--color-bg);
+
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 1.5;
+
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
 }
 
-/* Scrollbar – simple, theme-aware */
-body::-webkit-scrollbar {
-    width: 8px;
-}
-body::-webkit-scrollbar-track {
-    background: transparent;
-}
-body::-webkit-scrollbar-thumb {
-    background: var(--accent-border);
-    border-radius: 999px;
+body,
+button,
+input,
+textarea,
+select {
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
 }
 
-/* Headings */
+#root {
+    width: 100%;
+    min-height: 100vh;
+}
 
 h1,
 h2,
@@ -49,53 +58,112 @@ h3,
 h4,
 h5,
 h6 {
-    font-family: "Antonio", sans-serif;
     color: var(--color-heading);
-    margin-top: 0;
+
+    font-family: "Arial Narrow", Arial, sans-serif;
+
+    font-weight: 800;
 }
 
-/* Basic anchor defaults */
+p {
+    color: var(--color-text);
+}
 
 a {
-    color: var(--link);
-    text-decoration: none;
-}
-a:hover {
-    color: var(--link-hover);
-    text-decoration: underline;
+    color: inherit;
 }
 
-/* Basic select, theme-aware */
-
+button,
+input,
+textarea,
 select {
-    font-family: inherit;
-    font-size: 13px;
-    color: var(--color-text);
-    background: var(--color-card-soft);
-    border: 1px solid var(--color-border);
-    border-radius: 6px;
-    padding: 8px 32px 8px 12px;
-    box-shadow: 0 0 0 1px transparent;
-    outline: none;
-    transition: background-color 0.16s ease-out, border-color 0.16s ease-out,
-        box-shadow 0.16s ease-out, color 0.16s ease-out;
-    appearance: auto;
-    -webkit-appearance: auto;
-    -moz-appearance: auto;
+    font: inherit;
 }
 
-select:hover {
-    background: var(--color-card);
-    border-color: var(--accent);
+button {
+    border: 0;
 }
 
-select:focus-visible {
-    outline: 2px solid var(--accent);
-    outline-offset: 3px;
-    box-shadow: 0 0 0 1px var(--accent-soft);
+button,
+a {
+    -webkit-tap-highlight-color: transparent;
 }
 
-select option {
-    background: var(--color-card);
-    color: var(--color-text);
+img,
+picture,
+svg,
+video,
+canvas {
+    display: block;
+
+    max-width: 100%;
+}
+
+img {
+    height: auto;
+}
+
+input,
+textarea,
+select {
+    max-width: 100%;
+}
+
+textarea {
+    resize: vertical;
+}
+
+ul,
+ol {
+    list-style-position: inside;
+}
+
+::selection {
+    color: var(--color-bg);
+    background: var(--accent);
+}
+
+:focus-visible {
+    outline-color: var(--focus-ring);
+}
+
+html {
+    scrollbar-width: thin;
+    scrollbar-color: var(--scrollbar-thumb) var(--scrollbar-track);
+}
+
+::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+}
+
+::-webkit-scrollbar-track {
+    background: var(--scrollbar-track);
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--scrollbar-thumb);
+
+    border: 2px solid var(--scrollbar-track);
+    border-radius: 999px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: var(--scrollbar-thumb-hover);
+}
+
+@media (prefers-reduced-motion: reduce) {
+    html {
+        scroll-behavior: auto;
+    }
+
+    *,
+    *::before,
+    *::after {
+        scroll-behavior: auto !important;
+
+        transition-duration: 0.01ms !important;
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+    }
 }

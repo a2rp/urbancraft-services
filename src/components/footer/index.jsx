@@ -1,30 +1,102 @@
-// src/components/footer/index.jsx
-import React from "react";
-import { Styled } from "./styled";
-import { TbHeart } from "react-icons/tb";
+import {
+    FiCodepen,
+    FiCoffee,
+    FiFacebook,
+    FiGithub,
+    FiGlobe,
+    FiHeart,
+    FiLinkedin,
+    FiMail,
+    FiYoutube,
+} from "react-icons/fi";
 
-export default function Footer() {
-    const year = new Date().getFullYear();
+import { FaPatreon } from "react-icons/fa";
+
+import logo from "../../assets/images/branding/logo.png";
+
+import { FOOTER_LINKS, SUPPORT_LINKS } from "../../data/footerLinks";
+
+import { Styled } from "./styled";
+
+const iconMap = {
+    portfolio: <FiGlobe aria-hidden="true" />,
+    github: <FiGithub aria-hidden="true" />,
+    codepen: <FiCodepen aria-hidden="true" />,
+    linkedin: <FiLinkedin aria-hidden="true" />,
+    facebook: <FiFacebook aria-hidden="true" />,
+    youtube: <FiYoutube aria-hidden="true" />,
+    email: <FiMail aria-hidden="true" />,
+    support: <FiHeart aria-hidden="true" />,
+    "buy-me-a-coffee": <FiCoffee aria-hidden="true" />,
+    patreon: <FaPatreon aria-hidden="true" />,
+};
+
+const allLinks = [...FOOTER_LINKS, ...SUPPORT_LINKS];
+
+const Footer = () => {
+    const currentYear = new Date().getFullYear();
 
     return (
         <Styled.Wrapper>
-            <Styled.BottomBar>
-                <div className="left">
-                    © {year} | All rights reserved.
+            <div className="container">
+                <div className="top">
+                    <div className="brand">
+                        <img
+                            className="logo"
+                            src={logo}
+                            alt=""
+                            aria-hidden="true"
+                        />
+
+                        <div>
+                            <strong className="title">
+                                UrbanCraft Services
+                            </strong>
+
+                            <p className="text">
+                                Thoughtful local services designed for modern
+                                urban living.
+                            </p>
+                        </div>
+                    </div>
+
+                    <nav className="links" aria-label="External links">
+                        {allLinks.map((item) => (
+                            <a
+                                key={item.id}
+                                href={item.href}
+                                target={item.newTab ? "_blank" : undefined}
+                                rel={
+                                    item.newTab
+                                        ? "noopener noreferrer"
+                                        : undefined
+                                }
+                                aria-label={item.label}
+                                title={item.label}
+                            >
+                                {iconMap[item.id]}
+                            </a>
+                        ))}
+                    </nav>
                 </div>
 
-                <div className="right">
-                    Built with <TbHeart size={13} className="heart" /> in React by{" "}
-                    <a
-                        href="https://www.ashishranjan.net"
-                        target="_blank"
-                        rel="noreferrer"
-                    >
-                        Ashish Ranjan
-                    </a>
-                    .
+                <div className="bottom">
+                    <p>
+                        Copyright &copy; {currentYear}{" "}
+                        <a
+                            href="https://www.ashishranjan.net/"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                        >
+                            Ashish Ranjan
+                        </a>
+                    </p>
+
+                    <p className="note">UrbanCraft Services</p>
                 </div>
-            </Styled.BottomBar>
+            </div>
         </Styled.Wrapper>
     );
-}
+};
+
+export default Footer;

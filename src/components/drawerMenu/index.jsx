@@ -27,6 +27,7 @@ const DrawerMenu = ({ isOpen, onClose }) => {
     const location = useLocation();
 
     const closeButtonRef = useRef(null);
+    const panelRef = useRef(null);
     const previousFocusedRef = useRef(null);
 
     useEffect(() => {
@@ -47,6 +48,28 @@ const DrawerMenu = ({ isOpen, onClose }) => {
         const handleKeyDown = (event) => {
             if (event.key === "Escape") {
                 onClose();
+                return;
+            }
+
+            if (event.key !== "Tab") {
+                return;
+            }
+
+            const focusable = panelRef.current?.querySelectorAll(
+                'a[href], button:not([disabled]), input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])',
+            );
+            const first = focusable?.[0];
+            const last = focusable?.[focusable.length - 1];
+
+            if (!first || !last || !panelRef.current?.contains(document.activeElement)) {
+                event.preventDefault();
+                (event.shiftKey ? last : first)?.focus();
+            } else if (event.shiftKey && document.activeElement === first) {
+                event.preventDefault();
+                last.focus();
+            } else if (!event.shiftKey && document.activeElement === last) {
+                event.preventDefault();
+                first.focus();
             }
         };
 
@@ -74,11 +97,13 @@ const DrawerMenu = ({ isOpen, onClose }) => {
             <button
                 className="backdrop"
                 type="button"
+                tabIndex={-1}
                 onClick={onClose}
                 aria-label="Close navigation menu"
             />
 
             <aside
+                ref={panelRef}
                 className="panel"
                 role="dialog"
                 aria-modal="true"

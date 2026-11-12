@@ -89,7 +89,7 @@ src
 ```bash
 git clone https://github.com/a2rp/urbancraft-services.git
 cd urbancraft-services
-npm install
+npm ci
 npm run dev
 ```
 

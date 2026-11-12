@@ -14,6 +14,7 @@ const Gallery = () => {
     const [selectedImage, setSelectedImage] = useState(null);
 
     const closeButtonRef = useRef(null);
+    const openerRef = useRef(null);
 
     const filteredImages = useMemo(() => {
         if (activeFilter === "all") {
@@ -34,24 +35,37 @@ const Gallery = () => {
 
         document.body.style.overflow = "hidden";
 
-        window.requestAnimationFrame(() => {
+        const focusFrame = window.requestAnimationFrame(() => {
             closeButtonRef.current?.focus();
         });
 
         const handleKeyDown = (event) => {
             if (event.key === "Escape") {
                 setSelectedImage(null);
+            } else if (event.key === "Tab") {
+                event.preventDefault();
+                closeButtonRef.current?.focus();
             }
         };
 
         document.addEventListener("keydown", handleKeyDown);
 
         return () => {
+            window.cancelAnimationFrame(focusFrame);
             document.body.style.overflow = previousOverflow;
 
             document.removeEventListener("keydown", handleKeyDown);
+
+            if (openerRef.current?.isConnected) {
+                openerRef.current.focus();
+            }
         };
     }, [selectedImage]);
+
+    const openImage = (event, item) => {
+        openerRef.current = event.currentTarget;
+        setSelectedImage(item);
+    };
 
     const handleModalClose = () => {
         setSelectedImage(null);
@@ -105,7 +119,7 @@ const Gallery = () => {
                                     className="galleryCard"
                                     key={item.id}
                                     type="button"
-                                    onClick={() => setSelectedImage(item)}
+                                    onClick={(event) => openImage(event, item)}
                                     aria-label={`Open ${item.title}`}
                                 >
                                     <ImageWithLoader
